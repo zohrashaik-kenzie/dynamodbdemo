@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLDataException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
@@ -40,5 +41,10 @@ public class CustomerController {
         @DeleteMapping("/delete/{id}")
         public String deleteCustomerById(@PathVariable("id") String customerId) {
             return customerRepository.deleteCustomerById(customerId);
+        }
+
+         @GetMapping("/getCustomersByLastName")
+        public List<Customer> getCustomersByLastName(@RequestParam("lastName") String lastName) {
+            return customerRepository.getCustomersByLastName(lastName);
         }
     }
