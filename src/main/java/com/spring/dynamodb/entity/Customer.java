@@ -21,6 +21,7 @@ public class Customer {
     private String firstName;
 
     @DynamoDBAttribute
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "lastName-firstName-index")
     private String lastName;
 
     @DynamoDBAttribute

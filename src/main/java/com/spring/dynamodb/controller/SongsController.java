@@ -36,5 +36,10 @@ public class SongsController {
     public Song saveSong(@RequestBody Song song) throws SQLDataException {
         return songsRepository.saveSong(song);
     }
+
+    @GetMapping("/getArtistSongsByTitle")
+    public List<Song> getArtistSongsByTitle(@RequestParam("artist") String artist, @RequestParam("songTitle") String songTitle) {
+        return songsRepository.getArtistSongsByTitle(artist, songTitle);
+    }
 }
 
