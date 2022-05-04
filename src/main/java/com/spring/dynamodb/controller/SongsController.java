@@ -41,5 +41,17 @@ public class SongsController {
     public List<Song> getArtistSongsByTitle(@RequestParam("artist") String artist, @RequestParam("songTitle") String songTitle) {
         return songsRepository.getArtistSongsByTitle(artist, songTitle);
     }
+
+    @GetMapping("/getSongsByAwards")
+    public List<Song> getSongs(@RequestParam("minAwards") String minAwards, @RequestParam("maxAwards") String maxAwards) {
+        return songsRepository.getSongsByAwards(minAwards,maxAwards);
+    }
+
+    @GetMapping("/getAllSongs")
+    public List<Song> getSongs() {
+        return songsRepository.getAllSongs();
+    }
+
+
 }
 

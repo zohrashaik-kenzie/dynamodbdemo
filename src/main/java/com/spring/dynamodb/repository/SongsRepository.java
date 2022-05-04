@@ -17,6 +17,26 @@ public class SongsRepository {
     @Autowired
     private DynamoDBMapper dynamoDBMapper;
 
+    public List<Song> getAllSongs(){
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+        PaginatedScanList<Song> songList = dynamoDBMapper.scan(Song.class, scanExpression);
+        return songList;
+    }
+
+    public List<Song> getSongsByAwards(String minAwards, String maxAwards){
+       // PaginatedScanList<Song> songList = dynamoDBMapper.scan(Song.class, scanExpression);
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":minAwards", new AttributeValue().withN(minAwards));
+        valueMap.put(":maxAwards", new AttributeValue().withN(maxAwards));
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("Awards between :minAwards and :maxAwards")
+                .withExpressionAttributeValues(valueMap);
+        PaginatedScanList<Song> songList = dynamoDBMapper.scan(Song.class, scanExpression);
+        return songList;
+    }
+
+
+
     public List<Song> getSongsByArtist(String artist, String exclusiveStartSongTitle) {
         Song song = new Song();
         song.setArtist(artist);
