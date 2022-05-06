@@ -1,9 +1,10 @@
 package com.spring.dynamodb.controller;
-import com.spring.dynamodb.entity.Customer;
-import com.spring.dynamodb.entity.Song;
-import com.spring.dynamodb.repository.CustomerRepository;
+import com.spring.dynamodb.controller.model.Song;
+import com.spring.dynamodb.entity.SongEntity;
 import com.spring.dynamodb.repository.SongsRepository;
+import com.spring.dynamodb.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLDataException;
@@ -12,46 +13,40 @@ import java.util.List;
 @RestController
 @RequestMapping("/songs")
 public class SongsController {
-    @Autowired
-    private SongsRepository songsRepository;
+    private SongService songService;
+
+    SongsController(SongService songService) {
+        this.songService = songService;
+    }
+
 
     @GetMapping("/getSongsByArtist")
+    public List<SongEntity> getSongsByArtist(@RequestParam("artist") String artist, @RequestParam String pageNumber) {
 
-    public List<Song> getSongsByArtist(@RequestParam("artist") String artist, @RequestParam String pageNumber) {
-
-        List<Song> firstPageOfSongs = songsRepository.getSongsByArtist(artist, null);
-        // retrieve title of last song returned on the first page using a helper method (method implementation not shown),
-        // which would return "Where is the Love?" in this case and returns null if the provided list is empty
-        Song lastSongTitle = firstPageOfSongs.get(firstPageOfSongs.size() - 1);
-        //this call will return the song "Let's Get it Started"
-        List<Song> secondPageOfSongs = songsRepository.getSongsByArtist(artist, lastSongTitle.getSongTitle());
-        if (pageNumber.equals("1"))
-            return firstPageOfSongs;
-        else
-            return secondPageOfSongs;
+       return songService.getSongsByArtist(artist,pageNumber);
 
     }
 
     @PostMapping("/add")
-    public Song saveSong(@RequestBody Song song) throws SQLDataException {
-        return songsRepository.saveSong(song);
+    public SongEntity saveSong(@RequestBody SongEntity song) throws SQLDataException {
+        return songService.saveSong(song);
     }
 
     @GetMapping("/getArtistSongsByTitle")
-    public List<Song> getArtistSongsByTitle(@RequestParam("artist") String artist, @RequestParam("songTitle") String songTitle) {
-        return songsRepository.getArtistSongsByTitle(artist, songTitle);
+    public List<SongEntity> getArtistSongsByTitle(@RequestParam("artist") String artist, @RequestParam("songTitle") String songTitle) {
+        return songService.getArtistSongsByTitle(artist, songTitle);
     }
 
     @GetMapping("/getSongsByAwards")
-    public List<Song> getSongs(@RequestParam("minAwards") String minAwards, @RequestParam("maxAwards") String maxAwards) {
-        return songsRepository.getSongsByAwards(minAwards,maxAwards);
+    public List<SongEntity> getSongs(@RequestParam("minAwards") String minAwards, @RequestParam("maxAwards") String maxAwards) {
+        return songService.getSongsByAwards(minAwards,maxAwards);
     }
 
     @GetMapping("/getAllSongs")
-    public List<Song> getSongs() {
-        return songsRepository.getAllSongs();
+    public ResponseEntity<List<SongResponse>> getSongs() {
+        List<SongResponse> songs = songService.getAllSongs();
+        return ResponseEntity.ok(songs);
     }
-
 
 }
 

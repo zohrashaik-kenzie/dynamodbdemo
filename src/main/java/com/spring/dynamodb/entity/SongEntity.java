@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamoDBTable(tableName = "Music")
-public class Song {
+public class SongEntity {
 
     @DynamoDBHashKey(attributeName="Artist")
     private String artist;

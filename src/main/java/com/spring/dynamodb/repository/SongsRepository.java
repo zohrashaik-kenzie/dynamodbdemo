@@ -2,12 +2,10 @@ package com.spring.dynamodb.repository;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.spring.dynamodb.entity.Customer;
-import com.spring.dynamodb.entity.Song;
+import com.spring.dynamodb.entity.SongEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,13 +15,13 @@ public class SongsRepository {
     @Autowired
     private DynamoDBMapper dynamoDBMapper;
 
-    public List<Song> getAllSongs(){
+    public List<SongEntity> getAllSongs(){
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
-        PaginatedScanList<Song> songList = dynamoDBMapper.scan(Song.class, scanExpression);
+        PaginatedScanList<SongEntity> songList = dynamoDBMapper.scan(SongEntity.class, scanExpression);
         return songList;
     }
 
-    public List<Song> getSongsByAwards(String minAwards, String maxAwards){
+    public List<SongEntity> getSongsByAwards(String minAwards, String maxAwards){
        // PaginatedScanList<Song> songList = dynamoDBMapper.scan(Song.class, scanExpression);
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":minAwards", new AttributeValue().withN(minAwards));
@@ -31,14 +29,14 @@ public class SongsRepository {
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
                 .withFilterExpression("Awards between :minAwards and :maxAwards")
                 .withExpressionAttributeValues(valueMap);
-        PaginatedScanList<Song> songList = dynamoDBMapper.scan(Song.class, scanExpression);
+        PaginatedScanList<SongEntity> songList = dynamoDBMapper.scan(SongEntity.class, scanExpression);
         return songList;
     }
 
 
 
-    public List<Song> getSongsByArtist(String artist, String exclusiveStartSongTitle) {
-        Song song = new Song();
+    public List<SongEntity> getSongsByArtist(String artist, String exclusiveStartSongTitle) {
+        SongEntity song = new SongEntity();
         song.setArtist(artist);
 
         //DynamoDBQueryExpression<Song> queryExpression = new DynamoDBQueryExpression<Song>()
@@ -51,28 +49,28 @@ public class SongsRepository {
             exclusiveStartKey.put("SongTitle", new AttributeValue().withS(exclusiveStartSongTitle));
         }
 
-        DynamoDBQueryExpression<Song> queryExpression = new DynamoDBQueryExpression<Song>()
+        DynamoDBQueryExpression<SongEntity> queryExpression = new DynamoDBQueryExpression<SongEntity>()
                 .withHashKeyValues(song)
                 .withExclusiveStartKey(exclusiveStartKey)
                 .withLimit(3);
-        QueryResultPage<Song> songQueryResults = dynamoDBMapper.queryPage(Song.class, queryExpression);
+        QueryResultPage<SongEntity> songQueryResults = dynamoDBMapper.queryPage(SongEntity.class, queryExpression);
         return songQueryResults.getResults();
 
     }
 
-    public List<Song> getArtistSongsByTitle(String artist, String songTitle) {
+    public List<SongEntity> getArtistSongsByTitle(String artist, String songTitle) {
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":artist", new AttributeValue().withS(artist));
         valueMap.put(":songTitle", new AttributeValue().withS(songTitle));
 
-        DynamoDBQueryExpression<Song> queryExpression = new DynamoDBQueryExpression<Song>()
+        DynamoDBQueryExpression<SongEntity> queryExpression = new DynamoDBQueryExpression<SongEntity>()
                 .withKeyConditionExpression("Artist = :artist and SongTitle = :songTitle")
                 .withExpressionAttributeValues(valueMap);
-        PaginatedQueryList<Song> songList = dynamoDBMapper.query(Song.class, queryExpression);
+        PaginatedQueryList<SongEntity> songList = dynamoDBMapper.query(SongEntity.class, queryExpression);
         return songList;
     }
 
-        public Song saveSong(Song song) {
+        public SongEntity saveSong(SongEntity song) {
         try {
             dynamoDBMapper.save(song);
         }
