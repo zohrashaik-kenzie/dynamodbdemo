@@ -5,18 +5,30 @@ import com.spring.dynamodb.controller.model.Song;
 import com.spring.dynamodb.entity.SongEntity;
 import com.spring.dynamodb.repository.SongsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import utilities.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.cache.annotation.Cacheable;
 
 @Service
 public class SongService {
     @Autowired
     private SongsRepository songsRepository;
 
+    @Cacheable("List<SongResponse>")
     public List<SongResponse> getAllSongs(){
+        try
+        {
+            System.out.println("Going to sleep for 5 Secs.. to simulate backend call.");
+            Thread.sleep(1000*5);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
         List<SongEntity> songEs = songsRepository.getAllSongs();
         List<Song>  songs = new ArrayList<>();
         for(SongEntity songE:songEs){
@@ -48,7 +60,17 @@ public class SongService {
          return songsRepository.saveSong(song);
     }
 
+    @Cacheable("List<SongEntity>")
     public List<SongEntity> getArtistSongsByTitle(String artist, String songTitle){
+        try
+        {
+            System.out.println("Going to sleep for 5 Secs.. to simulate backend call.");
+            Thread.sleep(1000*5);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
         return songsRepository.getArtistSongsByTitle(artist, songTitle);
     }
 
