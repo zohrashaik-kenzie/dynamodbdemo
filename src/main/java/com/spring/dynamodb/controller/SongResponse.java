@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SongResponse {
 
-    @JsonProperty("ArtistName")
+    @JsonProperty("Name")
     private String artist;
     @JsonProperty("SongTitle")
     private String songTitle;

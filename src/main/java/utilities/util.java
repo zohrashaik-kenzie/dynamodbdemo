@@ -25,8 +25,7 @@ public class util {
         song.setArtist(songFrom.getArtist());
         song.setAwards(songFrom.getAwards());
         song.setSongTitle(songFrom.getSongTitle());
-
         return song;
-
     }
+
 }

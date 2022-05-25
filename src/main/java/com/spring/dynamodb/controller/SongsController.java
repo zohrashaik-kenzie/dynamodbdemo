@@ -21,7 +21,7 @@ public class SongsController {
 
 
     @GetMapping("/getSongsByArtist")
-    public List<SongEntity> getSongsByArtist(@RequestParam("artist") String artist, @RequestParam String pageNumber) {
+    public List<SongResponse> getSongsByArtist(@RequestParam("artist") String artist, @RequestParam String pageNumber) {
 
        return songService.getSongsByArtist(artist,pageNumber);
 
@@ -33,7 +33,7 @@ public class SongsController {
     }
 
     @GetMapping("/getArtistSongsByTitle")
-    public List<SongEntity> getArtistSongsByTitle(@RequestParam("artist") String artist, @RequestParam("songTitle") String songTitle) {
+    public List<SongResponse> getArtistSongsByTitle(@RequestParam("artist") String artist, @RequestParam("songTitle") String songTitle) {
         return songService.getArtistSongsByTitle(artist, songTitle);
     }
 

@@ -6,11 +6,9 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
-@EnableCaching
 public class DynamodbApplication {
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(DynamodbApplication.class, args);
 	}
 
