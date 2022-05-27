@@ -31,7 +31,7 @@ public class FilterClass2 implements Filter {
         System.out.println("Hit the filter registration bean");
 
         bean.setFilter(new FilterClass2());
-        bean.addUrlPatterns("/songs/*");  // or, use `setUrlPatterns()`
+        bean.addUrlPatterns("/songs/");  // or, use `setUrlPatterns()`
 
         return bean;
     }

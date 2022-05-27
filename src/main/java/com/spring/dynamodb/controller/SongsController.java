@@ -21,9 +21,16 @@ public class SongsController {
 
 
     @GetMapping("/getSongsByArtist")
-    public List<SongResponse> getSongsByArtist(@RequestParam("artist") String artist, @RequestParam String pageNumber) {
+    public List<SongResponse> getSongsByArtist2(@RequestParam("artist") String artist, @RequestParam String pageNumber) {
 
        return songService.getSongsByArtist(artist,pageNumber);
+
+    }
+
+    @GetMapping("/getSongsByArtist2")
+    public List<SongResponse> getSongsByArtist(@RequestParam("artist2") String artist, @RequestParam String pageNumber) {
+
+        return songService.getSongsByArtist(artist,pageNumber);
 
     }
 
@@ -37,15 +44,25 @@ public class SongsController {
         return songService.getArtistSongsByTitle(artist, songTitle);
     }
 
+    @GetMapping("/get_artist_songs_by_artist/{artist}")
+    public List<SongResponse> getArtistSongsByArtist(@PathVariable("artist") String artist) {
+        return songService.getArtistSongsByTitle(artist,"");
+    }
+
     @GetMapping("/getSongsByAwards")
     public List<SongEntity> getSongs(@RequestParam("minAwards") String minAwards, @RequestParam("maxAwards") String maxAwards) {
         return songService.getSongsByAwards(minAwards,maxAwards);
     }
 
-    @GetMapping("/getAllSongs")
+    @GetMapping("/getallsongs")
     public ResponseEntity<List<SongResponse>> getSongs() {
-        List<SongResponse> songs = songService.getAllSongs();
-        return ResponseEntity.ok(songs);
+        try {
+            List<SongResponse> songs = songService.getAllSongs();
+            return ResponseEntity.ok(songs);
+        }
+        catch(Exception e){
+            return (ResponseEntity<List<SongResponse>>) ResponseEntity.noContent();
+        }
     }
 
 }

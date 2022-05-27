@@ -30,15 +30,6 @@ public class SongService {
             return cachedSong;
         }
 
-        try
-        {
-            System.out.println("Going to sleep for 5 Secs.. to simulate backend call.");
-            Thread.sleep(1000*5);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
         List<SongEntity> songEs = songsRepository.getAllSongs();
         List<Song>  songs = new ArrayList<>();
         for(SongEntity songE:songEs){

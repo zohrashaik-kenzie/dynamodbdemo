@@ -1,0 +1,11 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+entity Photo {
+  * username: String
+  ..
+  * photoId: String
+  --
+  * timeStamp: String
+}
+@enduml
