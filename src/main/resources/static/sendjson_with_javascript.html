@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sending JSON with JavaScript</title>
+</head>
+<body>
+
+</body>
+<script>
+    const response = new XMLHttpRequest();
+
+const json = JSON.stringify({
+    artist: "Muna",
+    albumTitle: "Muna",
+    songTitle: "Anything but me",
+    awards: 10
+});
+
+response.open("POST", "http://localhost:8081/songs/add");
+response.setRequestHeader('Content-Type', 'application/json');
+
+response.send(json);
+
+response.onload = (e) => {
+    document.write(response.response);
+}
+</script>
+</html>

@@ -25,10 +25,10 @@ public class SongService {
     public List<SongResponse> getAllSongs(){
         //Search Employee record in Cache
         List<SongResponse> cachedSong = songCache.get("all");
-        if(cachedSong != null) {
+        /**if(cachedSong != null) {
             System.out.println("Songs  found in cache");
             return cachedSong;
-        }
+        }**/
 
         List<SongEntity> songEs = songsRepository.getAllSongs();
         List<Song>  songs = new ArrayList<>();

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sending Data with JavaScript's Fetch Function</title>
+</head>
+<body>
+
+</body>
+<script>
+const url = 'http://localhost:8081/songs/add';
+const data = { artist: "Koffee2", songTitle: "Shine2", albumTitle: "Gifted2" };
+
+fetch(
+url,
+{
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify(data),
+method: "POST"
+}
+)
+.then(data => data.json())
+.then((json) => {
+document.write(JSON.stringify(json));
+});
+</script>
+</html>

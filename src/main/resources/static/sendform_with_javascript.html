@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Send Form Data via JavaScript</title>
+</head>
+<body>
+Let's now send data with Javascript
+</body>
+<script>
+const formData = new FormData();
+
+formData.append("artist", "Bruno Mars2");
+formData.append("albumTitle", "Silk Sonic2");
+formData.append("songTitle", "Leave the door open2");
+
+const response = new XMLHttpRequest();
+response.open("POST", "http://localhost:8081/songs/add2");
+response.send(formData);
+
+response.onload = (e) => {
+document.write(response.response);
+}
+</script>
+</html>

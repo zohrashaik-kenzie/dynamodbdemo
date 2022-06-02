@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript's Fetch Function</title>
+</head>
+<body>
+
+</body>
+<script>
+    const url = 'http://localhost:8081/songs/getallsongs';
+fetch(url)
+.then(data => data.json())
+.then((json) => {
+    document.write(JSON.stringify(json));
+})
+</script>
+</html>

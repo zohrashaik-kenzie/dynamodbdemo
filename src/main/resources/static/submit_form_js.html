@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Form Data with Java Script</title>
+</head>
+<body>
+<form id="songForm">
+    <label>
+        Artist: <input type="text" name="artist" placeholder="Artist's name" />
+    </label>
+    <br>
+    <br>
+    <label>
+        Title of the Song: <input type="text" name="songTitle" placeholder="Song Title" />
+    </label>
+    <br>
+    <br>
+    <label>
+        Title of the Album: <input type="text" name="albumTitle" placeholder="Album Title" />
+    </label>
+    <br>
+    <br>
+    <input type="submit" value="Submit" />
+</form>
+</body>
+<script>
+    const songForm = document.getElementById('songForm');
+    songForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      fetch('http://localhost:8081/songs/add2', {
+         method: 'post',
+         body: formData
+      }).then(function (response){
+        return response.text();
+      }).then(function (text) {
+         console.log(text);
+      }).catch(function (error) {
+          console.error(error);
+      })
+    });
+</script>
+</html>

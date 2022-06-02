@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>REST APIs with JavaScript</title>
+</head>
+<body>
+Welcome to our Songs Service Application!
+</body>
+<script>
+
+const request = new XMLHttpRequest();
+const url = 'http://localhost:8081/songs/getallsongs';
+request.open("GET", url);
+request.send();
+
+request.onload = (e) => {
+    document.write(request.response);
+}
+</script>
+</html>
