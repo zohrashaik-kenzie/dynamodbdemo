@@ -10,7 +10,7 @@ Welcome to our Songs Service Application!
 <script>
 
 const request = new XMLHttpRequest();
-const url = 'http://localhost:8081/songs/getallsongs';
+const url = 'http://localhost:8081/songs/getSongsByAwards?minAwards=0&maxAwards=1';
 request.open("GET", url);
 request.send();
 

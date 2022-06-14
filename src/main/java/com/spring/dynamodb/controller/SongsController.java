@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLDataException;
 import java.util.List;
 
+
 @CrossOrigin
 @RestController
 @RequestMapping("/songs")
-
 public class SongsController {
     private SongService songService;
 
@@ -73,7 +73,6 @@ public class SongsController {
     public List<SongEntity> getSongs(@RequestParam("minAwards") String minAwards, @RequestParam("maxAwards") String maxAwards) {
         return songService.getSongsByAwards(minAwards,maxAwards);
     }
-
 
     @RequestMapping(method = RequestMethod.GET, path = "/getallsongs")
     public ResponseEntity<List<SongResponse>> getSongs() {
